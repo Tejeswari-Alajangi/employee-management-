@@ -1,0 +1,748 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Registration</title>
+
+    <style>
+
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 25px;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(circle at 10% 20%, #dff9ff, transparent 30%),
+                radial-gradient(circle at 90% 80%, #eadcff, transparent 30%),
+                linear-gradient(135deg, #eef9ff, #f8f0ff);
+
+            color: #222;
+
+            transition: 0.4s;
+        }
+
+
+        /* =========================
+           ANIMATED BACKGROUND
+        ========================= */
+
+        body::before,
+        body::after {
+            content: "";
+
+            position: fixed;
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            z-index: -1;
+
+            animation: floating 7s ease-in-out infinite;
+        }
+
+
+        body::before {
+            width: 260px;
+            height: 260px;
+
+            background: rgba(0, 198, 255, 0.18);
+
+            top: -80px;
+            left: -80px;
+        }
+
+
+        body::after {
+            width: 320px;
+            height: 320px;
+
+            background: rgba(142, 45, 226, 0.15);
+
+            right: -120px;
+            bottom: -120px;
+
+            animation-delay: 2s;
+        }
+
+
+        @keyframes floating {
+
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-25px) rotate(10deg);
+            }
+
+        }
+
+
+        /* =========================
+           REGISTRATION CARD
+        ========================= */
+
+        #registrationform {
+
+            width: 440px;
+
+            padding: 38px;
+
+            border-radius: 28px;
+
+            background: rgba(255, 255, 255, 0.72);
+
+            backdrop-filter: blur(18px);
+
+            -webkit-backdrop-filter: blur(18px);
+
+            border: 1px solid rgba(255, 255, 255, 0.8);
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.15),
+                inset 0 1px 2px rgba(255,255,255,0.8);
+
+            transition: 0.4s;
+
+            animation: cardAppear 0.7s ease;
+        }
+
+
+        @keyframes cardAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(35px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+        }
+
+
+        #registrationform:hover {
+
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 35px 80px rgba(0, 0, 0, 0.2);
+        }
+
+
+        /* =========================
+           HEADING
+        ========================= */
+
+        h2 {
+
+            text-align: center;
+
+            margin-bottom: 10px;
+
+            font-size: 30px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #0072ff,
+                    #00c6ff,
+                    #8e2de2
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #666;
+
+            font-size: 14px;
+
+            margin-bottom: 28px;
+        }
+
+
+        /* =========================
+           ERROR MESSAGE
+        ========================= */
+
+        .error-message {
+
+            padding: 12px;
+
+            margin-bottom: 20px;
+
+            border-radius: 10px;
+
+            background: #ffe5e5;
+
+            color: #d60000;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            border-left: 4px solid #ff3333;
+        }
+
+
+        /* =========================
+           LABELS
+        ========================= */
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+
+            color: #333;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           INPUT GROUP
+        ========================= */
+
+        .input-group {
+
+            position: relative;
+
+            margin-bottom: 20px;
+        }
+
+
+        .input-icon {
+
+            position: absolute;
+
+            left: 14px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 18px;
+
+            z-index: 2;
+        }
+
+
+        input[type="text"],
+        input[type="password"] {
+
+            width: 100%;
+
+            padding: 13px 15px 13px 45px;
+
+            border: 2px solid #e1e1e1;
+
+            border-radius: 12px;
+
+            outline: none;
+
+            background: rgba(255,255,255,0.9);
+
+            color: #222;
+
+            font-size: 15px;
+
+            transition: 0.3s;
+
+            box-shadow:
+                inset 0 2px 5px rgba(0,0,0,0.04);
+        }
+
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+
+            border-color: #00a6c7;
+
+            box-shadow:
+                0 0 0 4px rgba(0,166,199,0.12),
+                0 8px 20px rgba(0,166,199,0.12);
+
+            transform: translateY(-2px);
+        }
+
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+
+        /* =========================
+           BUTTON AREA
+        ========================= */
+
+        .button-row {
+
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 8px;
+        }
+
+
+        input[type="submit"],
+        input[type="reset"] {
+
+            flex: 1;
+
+            padding: 13px 20px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            color: white;
+
+            transition: 0.3s;
+        }
+
+
+        /* =========================
+           REGISTER BUTTON
+        ========================= */
+
+        input[type="submit"] {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00c6ff,
+                    #0072ff
+                );
+
+            box-shadow:
+                0 6px 0 #0055c7,
+                0 12px 22px rgba(0,114,255,0.25);
+        }
+
+
+        input[type="submit"]:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 10px 0 #0055c7,
+                0 18px 28px rgba(0,114,255,0.35);
+        }
+
+
+        input[type="submit"]:active {
+
+            transform: translateY(3px);
+
+            box-shadow:
+                0 3px 0 #0055c7;
+        }
+
+
+        /* =========================
+           RESET BUTTON
+        ========================= */
+
+        input[type="reset"] {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #555,
+                    #222
+                );
+
+            box-shadow:
+                0 6px 0 #111,
+                0 10px 20px rgba(0,0,0,0.18);
+        }
+
+
+        input[type="reset"]:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 10px 0 #111,
+                0 16px 25px rgba(0,0,0,0.25);
+        }
+
+
+        /* =========================
+           LOGIN LINK
+        ========================= */
+
+        .login-link {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 23px;
+
+            color: #0072ff;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+
+        .login-link:hover {
+
+            color: #8e2de2;
+
+            transform: translateY(-2px);
+        }
+
+
+        .bottom-text {
+
+            text-align: center;
+
+            margin-top: 12px;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           DARK THEME
+        ========================= */
+
+        body.dark {
+
+            background:
+                radial-gradient(
+                    circle at 10% 20%,
+                    #152c45,
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 80%,
+                    #302050,
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #080b12,
+                    #101827
+                );
+
+            color: white;
+        }
+
+
+        body.dark #registrationform {
+
+            background: rgba(20,25,40,0.78);
+
+            border-color: rgba(255,255,255,0.08);
+
+            box-shadow:
+                0 30px 70px rgba(0,0,0,0.55);
+        }
+
+
+        body.dark h2 {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00e5ff,
+                    #00bcd4,
+                    #bb86fc
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        body.dark .subtitle {
+
+            color: #aaa;
+        }
+
+
+        body.dark label {
+
+            color: #eee;
+        }
+
+
+        body.dark input[type="text"],
+        body.dark input[type="password"] {
+
+            background: rgba(35,40,55,0.9);
+
+            color: white;
+
+            border-color: #555;
+        }
+
+
+        body.dark input::placeholder {
+
+            color: #888;
+        }
+
+
+        body.dark .login-link {
+
+            color: #00d9ff;
+        }
+
+
+        body.dark .bottom-text {
+
+            color: #aaa;
+        }
+
+
+        /* =========================
+           MOBILE RESPONSIVE
+        ========================= */
+
+        @media (max-width: 520px) {
+
+            body {
+
+                padding: 15px;
+
+                overflow-y: auto;
+            }
+
+
+            #registrationform {
+
+                width: 100%;
+
+                max-width: 400px;
+
+                padding: 28px 22px;
+            }
+
+
+            h2 {
+
+                font-size: 27px;
+            }
+
+
+            .button-row {
+
+                flex-direction: column;
+            }
+
+
+            input[type="submit"],
+            input[type="reset"] {
+
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body class="{{theme}}">
+
+
+    <form id="registrationform" action="/register" method="post">
+
+
+        <!-- Heading -->
+
+        <h2>
+            📝 Create Account
+        </h2>
+
+
+        <p class="subtitle">
+            ✨ Register for Employee Management System
+        </p>
+
+
+        <!-- Error -->
+
+        {% if error %}
+
+        <p class="error-message">
+            ⚠️ {{ error }}
+        </p>
+
+        {% endif %}
+
+
+        <!-- Full Name -->
+
+        <label for="fullname">
+            👤 Full Name
+        </label>
+
+        <div class="input-group">
+
+            <span class="input-icon">
+                👤
+            </span>
+
+            <input
+                type="text"
+                name="fullname"
+                id="fullname"
+                placeholder="Enter your full name"
+                required
+            >
+
+        </div>
+
+
+        <!-- Username -->
+
+        <label for="username">
+            🪪 Username
+        </label>
+
+        <div class="input-group">
+
+            <span class="input-icon">
+                🪪
+            </span>
+
+            <input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="Choose a username"
+                required
+            >
+
+        </div>
+
+
+        <!-- Password -->
+
+        <label for="password">
+            🔐 Password
+        </label>
+
+        <div class="input-group">
+
+            <span class="input-icon">
+                🔒
+            </span>
+
+            <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Create a password"
+                required
+            >
+
+        </div>
+
+
+        <!-- Buttons -->
+
+        <div class="button-row">
+
+            <input
+                type="submit"
+                value="🚀 Register"
+            >
+
+            <input
+                type="reset"
+                value="🔄 Reset"
+            >
+
+        </div>
+
+
+        <!-- Login -->
+
+        <a
+            href="/login"
+            class="login-link"
+        >
+            🔑 Already have an account? Login
+        </a>
+
+
+        <p class="bottom-text">
+            💙 Start managing your employees easily
+        </p>
+
+
+    </form>
+
+
+</body>
+
+</html>
+
